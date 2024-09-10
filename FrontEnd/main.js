@@ -280,16 +280,16 @@ const limitFileSize = function () {
   modal.querySelector("#file").addEventListener('change', event => {
     const file = modal.querySelector("#file").files[0];
 
-    const maxFileSizeInKB = 4000000;
+    const maxFileSizeInOctets = 4000000;
     const size = file.size
-    if (size > maxFileSizeInKB) {
+    if (size > maxFileSizeInOctets) {
       modal.querySelector(".js-size-alert").append(" Fichier trop lourd")
       console.log(modal.querySelector(".js-size-alert"))
       modal.querySelector(".js-size-alert").classList = "js-size-alert error"
       modal.querySelector("#js-modal-addimg").reset()
 
       return;
-      
+
     }else {
     modal.querySelector(".js-size-alert").classList = "js-size-alert"
     modal.querySelector(".js-size-alert").innerHTML = "jpg, png : 4mo max";
