@@ -251,7 +251,6 @@ const displayOptions = async () => {
 }
 
 const displayPreview = function () {
-  modal.querySelector("#file").addEventListener("change", () => {
 
     modal.querySelector(".fa-image").style.display = "none";
     const reader = new FileReader();
@@ -272,9 +271,33 @@ const displayPreview = function () {
       preview.style.display = "flex"
       modal.querySelector("#file").removeEventListener("change", () => { })
     }
-  })
+  
 }
 
+
+const limitFileSize = function () {
+
+  modal.querySelector("#file").addEventListener('change', event => {
+    const file = modal.querySelector("#file").files[0];
+
+    const maxFileSizeInKB = 4000000;
+    const size = file.size
+    if (size > maxFileSizeInKB) {
+      modal.querySelector(".js-size-alert").append(" Fichier trop lourd")
+      console.log(modal.querySelector(".js-size-alert"))
+      modal.querySelector(".js-size-alert").classList = "js-size-alert error"
+      modal.querySelector("#js-modal-addimg").reset()
+
+      return;
+      
+    }else {
+    modal.querySelector(".js-size-alert").classList = "js-size-alert"
+    modal.querySelector(".js-size-alert").innerHTML = "jpg, png : 4mo max";
+
+    displayPreview()
+    }
+  });
+}
 
 
 const validSelector = function () {
@@ -367,7 +390,8 @@ const check = function () {
         addValidListeners()
 
         return true
-      } else { formIncomplete()
+      } else {
+        formIncomplete()
 
       }
     } else {
@@ -381,7 +405,7 @@ const check = function () {
 }
 
 const submitOn = function () {
-  displayPreview()
+  limitFileSize()
 
   modal.querySelector('#file').addEventListener("change", check)
   modal.querySelector("#imgcategory").addEventListener("input", check)
